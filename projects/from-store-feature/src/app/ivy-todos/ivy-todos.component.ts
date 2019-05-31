@@ -1,4 +1,9 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { addComponentFeature } from '../add-component-feature';
+import { fromStore } from '../from-store.feature';
+import { Todos } from '../todo';
 
 @Component({
   selector: 'ivy-todos',
@@ -10,8 +15,8 @@ import { AfterViewInit, Component } from '@angular/core';
     </ul>
   `,
 })
-export class IvyTodosComponent implements AfterViewInit {
-  ngAfterViewInit() {
-    console.log('IvyTodosComponent#todos$', this['todos$']);
-  }
+export class IvyTodosComponent {
+  todos$!: Observable<Todos>;
 }
+
+addComponentFeature(fromStore({ todos$: 'todos' }), IvyTodosComponent);

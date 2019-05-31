@@ -18,7 +18,5 @@ export function fromStore(config: { [propertyName: string]: string }) {
 
       return componentInstance;
     };
-
-    console.log('fromStore feature applied', componentDef);
   };
 }
