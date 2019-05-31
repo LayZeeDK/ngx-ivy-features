@@ -4,9 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   styles: [],
   template: `
-    <p>
-      AppComponent works!
-    </p>
+    <app-todos></app-todos>
   `,
 })
 export class AppComponent {}
