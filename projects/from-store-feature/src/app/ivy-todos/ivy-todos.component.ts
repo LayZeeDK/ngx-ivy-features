@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { addComponentFeature } from '../add-component-feature';
+import { componentFeatures } from '../../component-features.decorator';
 import { fromStore } from '../from-store.feature';
 import { Todos } from '../todo';
 
@@ -15,8 +15,9 @@ import { Todos } from '../todo';
     </ul>
   `,
 })
+@componentFeatures([
+  fromStore({ todos$: 'todos' }),
+])
 export class IvyTodosComponent {
   todos$!: Observable<Todos>;
 }
-
-addComponentFeature(fromStore({ todos$: 'todos' }), IvyTodosComponent);
