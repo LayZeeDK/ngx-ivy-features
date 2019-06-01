@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { State } from '../reducers';
-import { Todos } from '../todo';
+import { Todos } from './todo';
 
 @Component({
   selector: 'app-todos',

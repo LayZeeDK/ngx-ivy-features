@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { componentFeatures } from '../../component-features.decorator';
-import { fromStore } from '../from-store.feature';
-import { Todos } from '../todo';
+import { componentFeatures, fromStore } from '../features';
+import { Todos } from './todo';
 
 @Component({
   selector: 'ivy-todos',
