@@ -7,7 +7,7 @@ import { ActionCreator, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 export interface ToStoreConfig {
-  [outputPropertyName: string]: ActionCreator,
+  readonly [outputPropertyName: string]: ActionCreator,
 }
 
 export function toStore(config: ToStoreConfig) {

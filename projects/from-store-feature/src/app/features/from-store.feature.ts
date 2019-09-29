@@ -4,7 +4,11 @@ import {
 } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 
-export function fromStore(config: { [propertyName: string]: string }) {
+export interface FromStoreConfig {
+  readonly [inputPropertyName: string]: string;
+}
+
+export function fromStore(config: FromStoreConfig) {
   return (componentDef: ComponentDef<any>) => {
     const originalFactory = componentDef.factory;
     componentDef.factory = () => {
