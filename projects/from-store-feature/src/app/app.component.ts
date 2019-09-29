@@ -10,6 +10,10 @@ import { Component } from '@angular/core';
 
     <app-todos></app-todos>
 
+    <app-add-todo></app-add-todo>
+
+
+
     <h1>
       Ivy todos
     </h1>
