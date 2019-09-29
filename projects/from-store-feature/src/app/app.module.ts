@@ -5,7 +5,13 @@ import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 import { metaReducers, reducers } from './reducers';
-import { AddTodoComponent, IvyTodosComponent, TodosComponent } from './todos';
+import {
+  AddTodoComponent,
+  AddTodoContainerComponent,
+  IvyAddTodoComponent,
+  IvyTodosComponent,
+  TodosComponent,
+} from './todos';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -13,7 +19,9 @@ import { AddTodoComponent, IvyTodosComponent, TodosComponent } from './todos';
     AppComponent,
     TodosComponent,
     AddTodoComponent,
+    AddTodoContainerComponent,
     IvyTodosComponent,
+    IvyAddTodoComponent,
   ],
   imports: [
     BrowserModule,

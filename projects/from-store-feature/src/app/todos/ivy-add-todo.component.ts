@@ -6,7 +6,7 @@ export interface AddTodoEvent {
 }
 
 @Component({
-  selector: 'app-add-todo-ui',
+  selector: 'ivy-add-todo',
   template: `
     <form [formGroup]="form"
       (ngSubmit)="onSubmit()">
@@ -18,7 +18,7 @@ export interface AddTodoEvent {
     </form>
   `,
 })
-export class AddTodoComponent {
+export class IvyAddTodoComponent {
   @Output()
   addTodo = new EventEmitter<AddTodoEvent>();
 
