@@ -19,6 +19,8 @@ import { Component } from '@angular/core';
     </h1>
 
     <ivy-todos></ivy-todos>
+
+    <ivy-add-todo></ivy-add-todo>
   `,
 })
 export class AppComponent {}
