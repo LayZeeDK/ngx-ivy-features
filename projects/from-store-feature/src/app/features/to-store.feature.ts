@@ -4,6 +4,7 @@ import {
   ɵɵdirectiveInject as directiveInject,
 } from '@angular/core';
 import { ActionCreator, Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 export interface ToStoreConfig {
   [outputPropertyName: string]: ActionCreator,
@@ -16,16 +17,22 @@ export function toStore(config: ToStoreConfig) {
       const componentInstance = originalFactory(componentDef.type);
       const store = directiveInject(Store);
 
+      const outputSubscription = new Subscription();
       Object
         .entries(config)
-        .forEach(([outputPropertyName, actionCreator]) => {
-          const outputProperty: EventEmitter<any> = componentInstance[outputPropertyName];
-          outputProperty.subscribe(event => {
-            store.dispatch(actionCreator.call(null, event));
-          });
+        .map(([outputPropertyName, actionCreator]): [EventEmitter<any>, ActionCreator] =>
+          [componentInstance[outputPropertyName], actionCreator])
+        .map(([outputProperty, actionCreator]) =>
+          outputProperty.subscribe(event =>
+            store.dispatch(actionCreator.call(null, event))))
+        .forEach(subscription => outputSubscription.add(subscription));
 
-          // TODO: add teardown
-        });
+      const originalNgOnDestroy = componentInstance.ngOnDestroy || (() => {});
+
+      componentInstance.ngOnDestroy = () => {
+        originalNgOnDestroy.call(componentInstance);
+        outputSubscription.unsubscribe();
+      };
 
       return componentInstance;
     };
