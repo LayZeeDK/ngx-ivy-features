@@ -2,11 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { componentFeatures, toStore } from '../features';
+import { AddTodoEvent } from './add-todo.event';
 import { addTodo } from './todo.actions';
-
-export interface AddTodoEvent {
-  readonly description: string;
-}
 
 @Component({
   selector: 'ivy-add-todo',

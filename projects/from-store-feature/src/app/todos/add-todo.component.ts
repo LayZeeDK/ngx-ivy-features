@@ -1,9 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-export interface AddTodoEvent {
-  readonly description: string;
-}
+import { AddTodoEvent } from './add-todo.event';
 
 @Component({
   selector: 'app-add-todo-ui',

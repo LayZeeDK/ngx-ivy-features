@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { State } from '../reducers';
-import { AddTodoEvent } from './add-todo.component';
+import { AddTodoEvent } from './add-todo.event';
 import { addTodo } from './todo.actions';
 
 @Component({
