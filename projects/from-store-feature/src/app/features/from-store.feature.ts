@@ -5,7 +5,7 @@ import {
 import { select, Store } from '@ngrx/store';
 
 export interface FromStoreConfig {
-  readonly [inputPropertyName: string]: string;
+  readonly [propertyName: string]: string;
 }
 
 export function fromStore(config: FromStoreConfig) {
