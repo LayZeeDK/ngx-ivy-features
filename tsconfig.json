@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ivy-features": [
+        "dist/ivy-features"
+      ],
+      "ivy-features/*": [
+        "dist/ivy-features/*"
+      ]
+    }
   }
 }
