@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "from-store-feature": {
+    "store-features": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:class": {
@@ -28,24 +28,24 @@
           "skipTests": true
         }
       },
-      "root": "projects/from-store-feature",
-      "sourceRoot": "projects/from-store-feature/src",
+      "root": "projects/store-features",
+      "sourceRoot": "projects/store-features/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/from-store-feature",
-            "index": "projects/from-store-feature/src/index.html",
-            "main": "projects/from-store-feature/src/main.ts",
-            "polyfills": "projects/from-store-feature/src/polyfills.ts",
-            "tsConfig": "projects/from-store-feature/tsconfig.app.json",
+            "outputPath": "dist/store-features",
+            "index": "projects/store-features/src/index.html",
+            "main": "projects/store-features/src/main.ts",
+            "polyfills": "projects/store-features/src/polyfills.ts",
+            "tsConfig": "projects/store-features/tsconfig.app.json",
             "assets": [
-              "projects/from-store-feature/src/favicon.ico",
-              "projects/from-store-feature/src/assets"
+              "projects/store-features/src/favicon.ico",
+              "projects/store-features/src/assets"
             ],
             "styles": [
-              "projects/from-store-feature/src/styles.css"
+              "projects/store-features/src/styles.css"
             ],
             "scripts": []
           },
@@ -53,8 +53,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "projects/from-store-feature/src/environments/environment.ts",
-                  "with": "projects/from-store-feature/src/environments/environment.prod.ts"
+                  "replace": "projects/store-features/src/environments/environment.ts",
+                  "with": "projects/store-features/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -79,26 +79,26 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "from-store-feature:build"
+            "browserTarget": "store-features:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "from-store-feature:build:production"
+              "browserTarget": "store-features:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "from-store-feature:build"
+            "browserTarget": "store-features:build"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/from-store-feature/tsconfig.app.json",
-              "projects/from-store-feature/tsconfig.spec.json"
+              "projects/store-features/tsconfig.app.json",
+              "projects/store-features/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -107,5 +107,5 @@
         }
       }
     }},
-  "defaultProject": "from-store-feature"
+  "defaultProject": "store-features"
 }
