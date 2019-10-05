@@ -27,7 +27,8 @@ export function toStore(config: ToStoreConfig) {
             store.dispatch(actionCreator.call(null, event))))
         .forEach(subscription => outputSubscription.add(subscription));
 
-      const originalNgOnDestroy = componentInstance.ngOnDestroy || (() => {});
+      const originalNgOnDestroy =
+        componentInstance.ngOnDestroy || (() => undefined);
 
       componentInstance.ngOnDestroy = () => {
         originalNgOnDestroy.call(componentInstance);
