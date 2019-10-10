@@ -5,8 +5,20 @@ import {
 import { ActivatedRoute } from '@angular/router';
 
 export interface FromRouteConfig {
+  readonly data?: string;
+  readonly fragment?: string;
   readonly paramMap?: string;
+  readonly queryParamMap?: string;
+  readonly url?: string;
 }
+
+const configKeys: Array<keyof FromRouteConfig> = [
+  'data',
+  'fragment',
+  'paramMap',
+  'queryParamMap',
+  'url',
+];
 
 export function fromRoute(config: FromRouteConfig) {
   return (componentDef: ComponentDef<any>) => {
@@ -15,9 +27,10 @@ export function fromRoute(config: FromRouteConfig) {
       const componentInstance = originalFactory(componentDef.type);
       const route = directiveInject(ActivatedRoute);
 
-      if (config.paramMap != null) {
-        componentInstance[config.paramMap] = route.paramMap;
-      }
+      configKeys
+        .filter(configKey => typeof config[configKey] === 'string')
+        .forEach(configKey =>
+          componentInstance[config[configKey]] = route[configKey]);
 
       return componentInstance;
     };
