@@ -6,6 +6,11 @@ export function componentFeatures(features: ComponentDefFeatures) {
   return <T>(componentType: Type<T>) => {
     Promise.resolve().then(() => {
       const componentDef = componentType['ngComponentDef'];
+
+      if (componentDef === undefined) {
+        throw new Error('Ivy is not enabled.');
+      }
+
       Object.assign(componentDef, { features });
       features.forEach(feature => feature(componentDef));
     });
