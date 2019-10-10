@@ -3,7 +3,7 @@ import { ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { CartService } from '../cart.service';
-import { componentFeatures, fromRoute } from '../features';
+import { componentFeatures, fromRoute, fromRouteParams } from '../features';
 import { products } from '../products';
 
 @Component({
@@ -12,18 +12,23 @@ import { products } from '../products';
 })
 @componentFeatures([
   fromRoute({ paramMap: 'params$' }),
+  fromRouteParams({ productId: 'productId$' }),
 ])
 export class IvyProductDetailsComponent implements OnInit {
   params$: Observable<ParamMap>;
   product;
+  productId$: Observable<string>;
 
   constructor(
     private cartService: CartService
   ) { }
 
   ngOnInit() {
-    this.params$.subscribe(params => {
-      this.product = products[+params.get('productId')];
+    // this.params$.subscribe(params => {
+    //   this.product = products[+params.get('productId')];
+    // });
+    this.productId$.subscribe(productId => {
+      this.product = products[+productId];
     });
   }
 
