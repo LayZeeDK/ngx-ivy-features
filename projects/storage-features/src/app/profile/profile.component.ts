@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { componentFeatures } from 'ivy-features';
 
-import { ApplicationStorage } from './application-storage';
+import { withStorage } from '../features';
+import { ApplicationStorage } from '../storage';
 import { ProfileService } from './profile.service';
-import { withStorage } from './with-storage.feature';
 
 @Component({
   selector: 'app-profile',
   template: `
     <p *ngIf="!isLoading; else loadingMessage">
-      My username is {{username}}, and I love to watch {{favoriteMovie}}.
+      My username is {{username}} and I love to watch {{favoriteMovie}}.
     </p>
 
     <ng-template #loadingMessage>

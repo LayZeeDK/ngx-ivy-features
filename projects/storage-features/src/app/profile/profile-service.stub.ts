@@ -13,7 +13,7 @@ export class ProfileServiceStub implements ProfileService {
         username: 'LayZeeDK',
       }),
       asapScheduler).pipe(
-        delay(1500),
+        delay(2000),
       );
   }
 }

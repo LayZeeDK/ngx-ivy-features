@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 
-import { storageToken } from '../storage.token';
+import { storageToken } from '../storage';
 
 @Component({
   selector: 'dev-truncate-storage',

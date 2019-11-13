@@ -3,8 +3,7 @@ import {
   ɵɵdirectiveInject as directiveInject,
 } from '@angular/core';
 
-import { ApplicationStorage } from './application-storage';
-import { StorageService } from './storage.service';
+import { ApplicationStorage, StorageService } from '../storage';
 
 export function withStorage(componentDef: ComponentDef<any>) {
   const originalFactory = componentDef.factory;
