@@ -19,7 +19,7 @@ import { addTodo } from './todo.actions';
   `,
 })
 @componentFeatures([
-  toStore({ addTodo })
+  toStore({ addTodo }),
 ])
 export class IvyAddTodoComponent {
   @Output()
