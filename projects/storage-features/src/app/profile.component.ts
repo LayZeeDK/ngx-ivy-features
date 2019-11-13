@@ -1,23 +1,56 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { componentFeatures } from 'ivy-features';
+
+import { ApplicationStorage } from './application-storage';
+import { ProfileService } from './profile.service';
+import { withStorage } from './with-storage.feature';
 
 @Component({
   selector: 'app-profile',
   template: `
-    <div *ngIf="!isLoading; else loadingMessage">
+    <p *ngIf="!isLoading; else loadingMessage">
       My username is {{username}}, and I love to watch {{favoriteMovie}}.
-    </div>
+    </p>
 
-    <div #loadingMessage>
-      Loading profile...
-    </div>
+    <ng-template #loadingMessage>
+      <p>
+        Loading profile...
+      </p>
+    </ng-template>
+
+    <dev-truncate-storage></dev-truncate-storage>
   `,
 })
-export class ProfileComponent {
+@componentFeatures([
+  withStorage,
+])
+export class ProfileComponent implements ApplicationStorage, OnInit {
   favoriteMovie?: string;
   username?: string;
 
   get isLoading() {
     return this.username == null
       || this.favoriteMovie == null;
+  }
+
+  delete!: (key: string) => void;
+  load!: (key: string) => string | null;
+  save!: (key: string, value: string) => void;
+
+  constructor(
+    private profileService: ProfileService,
+  ) {}
+
+  ngOnInit() {
+    this.favoriteMovie = this.load('favoriteMovie');
+    this.username = this.load('username');
+
+    this.profileService.loadFromBackend()
+      .subscribe(({ favoriteMovie, username }) => {
+        this.save('favoriteMovie', favoriteMovie);
+        this.save('username', username);
+        this.favoriteMovie = favoriteMovie;
+        this.username = username;
+      });
   }
 }

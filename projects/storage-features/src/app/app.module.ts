@@ -1,7 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { DevelopmentModule } from './development/development.module';
 import { ProfileComponent } from './profile.component';
 
 @NgModule({
@@ -12,6 +13,7 @@ import { ProfileComponent } from './profile.component';
   ],
   imports: [
     BrowserModule,
+    DevelopmentModule,
   ],
 })
 export class AppModule {}
