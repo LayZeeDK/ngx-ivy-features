@@ -217,6 +217,82 @@
           }
         }
       }
+    },
+    "storage-features": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/storage-features",
+      "sourceRoot": "projects/storage-features/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/storage-features",
+            "index": "projects/storage-features/src/index.html",
+            "main": "projects/storage-features/src/main.ts",
+            "polyfills": "projects/storage-features/src/polyfills.ts",
+            "tsConfig": "projects/storage-features/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/storage-features/src/favicon.ico",
+              "projects/storage-features/src/assets"
+            ],
+            "styles": [
+              "projects/storage-features/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/storage-features/src/environments/environment.ts",
+                  "with": "projects/storage-features/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "storage-features:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "storage-features:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "storage-features:build"
+          }
+        }
+      }
     }},
   "defaultProject": "store-features"
 }
