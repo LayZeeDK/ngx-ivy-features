@@ -3,9 +3,16 @@ import { componentFeatures } from 'ivy-features';
 
 import { withStorage } from '../features';
 import { ApplicationStorage } from '../storage';
+import { ProfileServiceStub } from './profile-service.stub';
 import { ProfileService } from './profile.service';
 
 @Component({
+  providers: [
+    {
+      provide: ProfileService,
+      useClass: ProfileServiceStub,
+    },
+  ],
   selector: 'app-profile',
   template: `
     <p *ngIf="!isLoading; else loadingMessage">
