@@ -293,6 +293,82 @@
           }
         }
       }
+    },
+    "lifecycle-features": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/lifecycle-features",
+      "sourceRoot": "projects/lifecycle-features/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/lifecycle-features",
+            "index": "projects/lifecycle-features/src/index.html",
+            "main": "projects/lifecycle-features/src/main.ts",
+            "polyfills": "projects/lifecycle-features/src/polyfills.ts",
+            "tsConfig": "projects/lifecycle-features/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/lifecycle-features/src/favicon.ico",
+              "projects/lifecycle-features/src/assets"
+            ],
+            "styles": [
+              "projects/lifecycle-features/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/lifecycle-features/src/environments/environment.ts",
+                  "with": "projects/lifecycle-features/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "lifecycle-features:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "lifecycle-features:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "lifecycle-features:build"
+          }
+        }
+      }
     }},
   "defaultProject": "store-features"
 }
