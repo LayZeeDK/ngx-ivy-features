@@ -1,5 +1,5 @@
 import { ɵComponentDef as ComponentDef } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 
 export interface ObserveLifecycleConfig {
   // readonly afterContentChecked?: string;
@@ -8,7 +8,7 @@ export interface ObserveLifecycleConfig {
   readonly afterViewInit?: string;
   // readonly doCheck?: string;
   // readonly onChanges?: string;
-  // readonly onDestroy?: string;
+  readonly onDestroy?: string;
   readonly onInit?: string;
 }
 
@@ -19,7 +19,7 @@ const configKeys: Array<keyof ObserveLifecycleConfig> = [
   'afterViewInit',
   // 'doCheck',
   // 'onChanges',
-  // 'onDestroy',
+  'onDestroy',
   'onInit',
 ];
 
@@ -31,9 +31,9 @@ export function observeLifecycle(config: ObserveLifecycleConfig) {
     if (isOnInitObserved) {
       const originalHook: () => void = componentDef.type.prototype.ngOnInit
         || (() => undefined);
-      onInitSubject = new Subject();
+      onInitSubject = new ReplaySubject(1);
       componentDef.onInit = function ngOnInit() {
-        onInitSubject.complete();
+        onInitSubject.next();
         originalHook.call(this);
       };
     }
@@ -41,12 +41,25 @@ export function observeLifecycle(config: ObserveLifecycleConfig) {
     const isAfterViewInitObserved = typeof config.afterViewInit === 'string';
     let afterViewInitSubject: Subject<never> | undefined;
 
-    if (isOnInitObserved) {
-      const originalHook: () => void = componentDef.type.prototype.ngOnInit
-        || (() => undefined);
-      afterViewInitSubject = new Subject();
+    if (isAfterViewInitObserved) {
+      const originalHook: () => void =
+        componentDef.type.prototype.ngAfterViewInit || (() => undefined);
+      afterViewInitSubject = new ReplaySubject(1);
       componentDef.afterViewInit = function afterViewInit() {
-        afterViewInitSubject.complete();
+        afterViewInitSubject.next();
+        originalHook.call(this);
+      };
+    }
+
+    const isOnDestroyObserved = typeof config.onDestroy === 'string';
+    let onDestroySubject: Subject<never> | undefined;
+
+    if (isOnDestroyObserved) {
+      const originalHook: () => void = componentDef.type.prototype.ngOnDestroy
+        || (() => undefined);
+      onDestroySubject = new ReplaySubject(1);
+      componentDef.onDestroy = function onDestroy() {
+        onDestroySubject.next();
         originalHook.call(this);
       };
     }
@@ -63,6 +76,20 @@ export function observeLifecycle(config: ObserveLifecycleConfig) {
         componentInstance[config.afterViewInit] =
           afterViewInitSubject.asObservable();
       }
+
+      if (isOnDestroyObserved) {
+        componentInstance[config.onDestroy] = onDestroySubject.asObservable();
+      }
+
+      const originalOnDestroy: () => void =
+        componentDef.type.prototype.ngOnDestroy || (() => undefined);
+      onDestroySubject = new ReplaySubject(1);
+      componentDef.onDestroy = function onDestroy() {
+        onInitSubject && onInitSubject.complete();
+        afterViewInitSubject && afterViewInitSubject.complete();
+        originalOnDestroy.call(this);
+        onDestroySubject && onDestroySubject.complete();
+      };
 
       return componentInstance;
     };

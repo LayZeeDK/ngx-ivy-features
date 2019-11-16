@@ -1,39 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { componentFeatures } from 'ivy-features';
-import { concat, Observable } from 'rxjs';
-import { endWith, startWith } from 'rxjs/operators';
+import { asapScheduler, concat, Observable, of } from 'rxjs';
+import { map, mapTo, observeOn, takeUntil } from 'rxjs/operators';
 
 import { observeLifecycle } from './features';
 
 @Component({
   selector: 'app-lifecycle',
   template: `
-    Initialized? {{ initializedMessage$ | async }}<br>
-    Ready? {{ readyMessage$ | async }}
+    Ready? {{ readyMessage$ | async }}<br>
+    Result: <span #result>{{ 4 + 2 }}</span>
   `,
 })
 @componentFeatures([
   observeLifecycle({
     afterViewInit: 'afterViewInit$',
-    onInit: 'onInit$',
+    onDestroy: 'onDestroy$',
   })
 ])
 export class LifecycleComponent implements OnInit {
-  afterViewInit$!: Observable<never>;
-  onInit$!: Observable<never>;
+  @ViewChild('result', { static: true })
+  result!: ElementRef<HTMLElement>;
 
-  initializedMessage$!: Observable<string>;
+  afterViewInit$!: Observable<never>;
+  onDestroy$!: Observable<never>;
+
   readyMessage$!: Observable<string>;
 
   ngOnInit() {
-    this.initializedMessage$ = this.onInit$.pipe(
-      startWith('No'),
-      endWith('Yes'));
-
     this.readyMessage$ = concat(
-      this.onInit$,
-      this.afterViewInit$).pipe(
-        startWith('No'),
-        endWith('Yes'));
+      of('No'),
+      this.afterViewInit$.pipe(
+        observeOn(asapScheduler),
+        mapTo('Yes')));
+
+    concat(this.afterViewInit$, of()).pipe(
+      map(() => this.result.nativeElement.innerText),
+      map(text => Number.parseInt(text, 10)),
+      takeUntil(this.onDestroy$),
+    ).subscribe(result => console.assert(result === 6));
   }
 }
