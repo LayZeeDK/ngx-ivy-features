@@ -2,6 +2,11 @@
 
 This project demonstrates Ivy component `features`.
 
+## Usage
+First run `yarn build ivy-features` to build the decorator library to `dist`.
+
+Then run for example `yarn start store-features`.
+
 ## NgRx Store features
 | Name        | Description                                  |
 | ----------- | -------------------------------------------- |
