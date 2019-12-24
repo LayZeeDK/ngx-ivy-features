@@ -1,9 +1,16 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { componentFeatures, withUsername } from './features';
 
 @Component({
   selector: 'app-root',
   styles: [],
   template: `
+    <header>
+      Username: {{username$ | async}}
+    </header>
+
     <h1>
       View Engine todos
     </h1>
@@ -23,4 +30,9 @@ import { Component } from '@angular/core';
     <ivy-add-todo></ivy-add-todo>
   `,
 })
-export class AppComponent {}
+@componentFeatures([
+  withUsername,
+])
+export class AppComponent {
+  username$: Observable<string>;
+}
