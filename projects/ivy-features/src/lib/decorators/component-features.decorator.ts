@@ -5,13 +5,16 @@ import { ComponentDefFeatures } from './component-def-feature';
 export function componentFeatures(features: ComponentDefFeatures) {
   return <T>(componentType: Type<T>) => {
     Promise.resolve().then(() => {
-      const componentDef = componentType['ngComponentDef'];
+      const componentDef = componentType['ɵcmp']
+        || componentType['ngComponentDef'];
 
       if (componentDef === undefined) {
         throw new Error('Ivy is not enabled.');
       }
 
-      Object.assign(componentDef, { features });
+      componentDef.features = componentDef.features || [];
+      componentDef.features = [...componentDef.features, ...features];
+
       features.forEach(feature => feature(componentDef));
     });
   };
